@@ -77,7 +77,8 @@ demo_blue''',
 		    --entrypoint time \
                     -v /etc/passwd:/etc/passwd:ro \
                     -v /etc/group:/etc/group:ro \
-                    -v /vagrant/source/DemoCICD:/vagrant/source/DemoCICD
+                    -v /var/lib/jenkins/.ssh/id_rsa:/var/lib/jenkins/.ssh/id_rsa:ro \
+                    -v /var/lib/jenkins/.ssh/config:/var/lib/jenkins/.ssh/config:ro
                     '''
                 }
             }      
@@ -87,7 +88,7 @@ demo_blue''',
                 sh """
             git pull;
             git add .;
-		    git config user.email "Jenkins@pmed.com";
+		    git config user.email "Jenkins@demo.com";
 		    git config user.name "Jenkins server";
 		    git commit -m "change docker image of ${params.module_name} to ${params.image_url}";
 		    git push origin master;
