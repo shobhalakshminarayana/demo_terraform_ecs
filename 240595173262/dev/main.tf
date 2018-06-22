@@ -166,7 +166,7 @@ module "demo_blue" {
   global_vpc_id                = "${module.vpc.vpc_id}"
   edtech_service_name          = "demo-blue"
   edtech_cluster_name          = "${module.demo_ecs.ecs_cluster_name}"
-  edtech_target_group_arn      = "${module.demo_alb.target_group_arns[0]}"
+  edtech_target_group_arn      = "${module.demo_alb.target_group_arns[1]}"
   edtech_service_docker_image  = "nginx"
   edtech_tag_product           = "${var.global_tag_product}"
   edtech_tag_sub_product       = "${var.global_tag_sub_product}"
