@@ -99,6 +99,10 @@ demo_blue''',
 					echo "Trigger the other job run"
 					build job: 'Terraform_apply_all',
 						parameters: [
+                                boolean(
+                                    name: 'apply_all',
+                                    value: true
+                                )
 						]
 				}
 			}
