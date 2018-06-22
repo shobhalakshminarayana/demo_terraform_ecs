@@ -94,6 +94,14 @@ demo_blue''',
 		    git push origin master;
                 """
             }
+            post {
+				success {
+					echo "Trigger the other job run"
+					build job: 'Terraform_apply_all',
+						parameters: [
+						]
+				}
+			}
         }
     }        
 }
