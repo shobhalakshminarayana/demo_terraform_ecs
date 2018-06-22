@@ -166,7 +166,7 @@ module "demo_blue" {
   edtech_service_name          = "demo-blue"
   edtech_cluster_name          = "${module.demo_ecs.ecs_cluster_name}"
   edtech_target_group_arn      = "${module.demo_alb.target_group_arns[0]}"
-  edtech_service_docker_image  = "240595173262.dkr.ecr.us-west-1.amazonaws.com/demo_app:da9122cf2278ecea6cc813ded6363b748034ee37"
+  edtech_service_docker_image  = "nginx"
   edtech_tag_product           = "${var.global_tag_product}"
   edtech_tag_sub_product       = "${var.global_tag_sub_product}"
   edtech_tag_contact           = "s.lakshminarayana@elsevier.com"
