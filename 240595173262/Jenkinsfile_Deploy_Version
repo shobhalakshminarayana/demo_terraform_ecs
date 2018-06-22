@@ -83,15 +83,17 @@ demo_blue''',
                 }
             }      
             steps {
-                sh 'git checkout master'
+                sh ''''
+                    git checkout master;
+                    git pull;
+                '''
                 unstash "${env.main_file}_fmt"
                 sh """
-            git pull;
-            git add .;
-		    git config user.email "Jenkins@demo.com";
-		    git config user.name "Jenkins server";
-		    git commit -m "change docker image of ${params.module_name} to ${params.image_url}";
-		    git push origin master;
+                    git add .;
+                    git config user.email "Jenkins@demo.com";
+                    git config user.name "Jenkins server";
+                    git commit -m "change docker image of ${params.module_name} to ${params.image_url}";
+                    git push origin master;
                 """
             }
             post {
