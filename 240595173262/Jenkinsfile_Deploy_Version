@@ -83,7 +83,7 @@ demo_blue''',
                 }
             }      
             steps {
-                sh ''''
+                sh '''
                     git checkout master;
                     git pull;
                 '''
