@@ -38,6 +38,7 @@ module "demo_ecs" {
   ecs_cluster_tag_orchestration = "${var.global_tag_orchestration}"
   ecs_cluster_instance_tier     = "ontotext"
   ecs_cluster_name_tag          = "ecs_cluster"
+  ecs_cluster_instance_type     = "m4.large"
 }
 
 module public_lb_sg {
