@@ -174,7 +174,7 @@ module "demo_blue" {
   edtech_tag_cost_code         = "${var.global_tag_cost_code}"
   edtech_tag_environment       = "demo"
   edtech_tag_orchestration     = "${var.global_tag_orchestration}"
-  edtech_service_docker_memory = 128
+  edtech_service_docker_memory = 512
 
   edtech_service_container_environments = [
     {
