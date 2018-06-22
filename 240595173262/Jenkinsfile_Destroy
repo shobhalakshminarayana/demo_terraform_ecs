@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+    options {
+        ansiColor('xterm')
+    }
+    parameters {
+        // Help with debug
+        booleanParam(
+            defaultValue: false,
+            description: 'Run Terraform destroy for all resources',
+            name: 'destroy_all'
+        )
+    }
+    environment {
+		// Demo access key
+		AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
+		AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
+		AWS_DEFAULT_REGION = 'us-west-1'
+	}
+    stages{
+        stage('Terraform init') { 
+            agent {
+                docker {
+                    image 'hashicorp/terraform:0.11.7'
+                    args '--entrypoint time -v /var/lib/jenkins/.ssh:/var/lib/jenkins/.ssh:ro -v /etc/passwd/:/etc/passwd:ro'
+                }
+            }
+            steps {
+                sh """
+                cd 240595173262/dev;
+                terraform init;
+                terraform plan -destroy;        
+                """
+            }
+        }
+        stage('Terraform destroy') {
+            when {
+                expression {
+                    return params.destroy_all
+                }
+            } 
+            agent {
+                docker {
+                    image 'hashicorp/terraform:0.11.7'
+                    args '--entrypoint time'
+                }
+            }
+            steps {
+                sh """
+                cd 240595173262/dev;
+                terraform destroy -auto-approve;        
+                """
+            }
+        } 
+    }    
+}

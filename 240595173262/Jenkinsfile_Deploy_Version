@@ -1,0 +1,98 @@
+pipeline {
+    agent any
+    options {
+        ansiColor('xterm')
+    }
+    parameters {
+        string(
+			name: 'image_url',
+			description: 'The URL to image'
+		)
+        choice(
+            choices: '''
+demo_green
+demo_blue''',
+            description: 'Which module we wish to change',
+            name: 'module_name'
+
+        )
+    }
+    environment {
+        main_file = 'main.tf'
+        account_id = '240595173262'
+        environment = 'dev'
+	}
+    stages{
+        stage('Update Terraform Code') {
+            when {
+                expression {
+                    return params.module_name != '' && params.image_url != null
+                }
+            }
+            agent {
+                docker {
+                    image 'alpine'
+                }
+            }
+            steps {
+                script {
+                    sh """
+                        cd ${env.account_id}/${env.environment};
+                        sed -i -E \'/module +"?${params.module_name}"?/,/^}/ s;(edtech_service_docker_image += +"?)[^"]*("?);\\1${params.image_url}\\2;\' ${env.main_file};
+		                cat main.tf;
+                    """
+                }
+            }
+            post {
+                success {
+                    stash name: "${env.main_file}", includes: "${env.account_id}/${env.environment}/${env.main_file}"
+                }
+            }
+        }
+        stage('Run terraform fmt') { 
+            agent {
+                docker {
+                    image 'hashicorp/terraform:0.11.7'
+                    args '--entrypoint time'
+                }
+            }      
+            steps {
+                unstash "${env.main_file}"
+                sh """
+                    cd ${env.account_id}/${env.environment};
+                    terraform fmt;
+                """
+            }
+            post {
+                success {
+                    stash name: "${env.main_file}_fmt", includes: "${env.account_id}/${env.environment}/${env.main_file}"
+                }
+            }
+        }
+        stage('Commit and push TF') { 
+            agent {
+                docker {
+                    image 'alpine/git'
+                    args '''
+		    --entrypoint time \
+                    -v /etc/passwd:/etc/passwd:ro \
+                    -v /etc/group:/etc/group:ro \
+                    -v /vagrant/source/DemoCICD:/vagrant/source/DemoCICD
+                    '''
+                }
+            }      
+            steps {
+                sh 'git checkout master'
+                unstash "${env.main_file}_fmt"
+                sh """
+            git pull;
+            git add .;
+		    git config user.email "Jenkins@pmed.com";
+		    git config user.name "Jenkins server";
+		    git commit -m "change docker image of ${params.module_name} to ${params.image_url}";
+		    git push origin master;
+                """
+            }
+        }
+    }        
+}
