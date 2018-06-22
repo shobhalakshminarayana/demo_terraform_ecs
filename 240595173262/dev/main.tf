@@ -207,15 +207,15 @@ module "demo_assignment" {
       host_name        = "${module.demo_green_public_alias_api.route53_record_fqdn}"
     },
     {
-      //main routing to blue
-      listener_arn     = "${module.demo_alb.https_listener_arns[0]}"
-      target_group_arn = "${module.demo_alb.target_group_arns[1]}"
-      host_name        = "${module.demo_main_public_alias_api.route53_record_fqdn}"
-    },
-    {
       //main routing to green
       listener_arn     = "${module.demo_alb.https_listener_arns[0]}"
       target_group_arn = "${module.demo_alb.target_group_arns[0]}"
+      host_name        = "${module.demo_main_public_alias_api.route53_record_fqdn}"
+    },
+    {
+      //main routing to blue
+      listener_arn     = "${module.demo_alb.https_listener_arns[0]}"
+      target_group_arn = "${module.demo_alb.target_group_arns[1]}"
       host_name        = "${module.demo_main_public_alias_api.route53_record_fqdn}"
     },
   ]
