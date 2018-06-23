@@ -39,6 +39,9 @@ module "demo_ecs" {
   ecs_cluster_instance_tier     = "ontotext"
   ecs_cluster_name_tag          = "ecs_cluster"
   ecs_cluster_instance_type     = "m4.large"
+  ecs_cluster_asg_max_size      = 2
+  ecs_cluster_asg_min_size      = 0
+  ecs_cluster_asg_desired_size  = 0
 }
 
 module public_lb_sg {
@@ -192,7 +195,7 @@ module "demo_blue" {
   ]
 }
 
-module "demo_assignment" {
+/*module "demo_assignment" {
   source = "git::ssh://git@gitlab.et-scm.com/NGUYEN1/hs-terraform-edtech-assignment.git?ref=c9f66"
 
   assignment_host_based_rules = [
@@ -219,7 +222,7 @@ module "demo_assignment" {
       host_name        = "${module.demo_main_public_alias_api.route53_record_fqdn}"
     },
   ]
-}
+}*/
 
 locals {
   demo_zone_id = "Z26XJJST2LTO8U"
