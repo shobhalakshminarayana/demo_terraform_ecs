@@ -41,7 +41,7 @@ module "demo_ecs" {
   ecs_cluster_instance_type     = "m4.large"
   ecs_cluster_asg_max_size      = 2
   ecs_cluster_asg_min_size      = 0
-  ecs_cluster_asg_desired_size  = 1
+  ecs_cluster_asg_desired_size  = 0
 }
 
 module public_lb_sg {
