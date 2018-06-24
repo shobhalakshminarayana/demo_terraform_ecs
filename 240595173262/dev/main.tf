@@ -138,7 +138,7 @@ module "demo_green" {
   edtech_service_name          = "demo-green"
   edtech_cluster_name          = "${module.demo_ecs.ecs_cluster_name}"
   edtech_target_group_arn      = "${module.demo_alb.target_group_arns[0]}"
-  edtech_service_docker_image  = "240595173262.dkr.ecr.us-west-1.amazonaws.com/demo_app:cdca1f57412127a6c80fc0e448d362b756147ffb"
+  edtech_service_docker_image  = "240595173262.dkr.ecr.us-west-1.amazonaws.com/demo_app:de8ef4dc020b94982831c75104e0521daa33e5e9"
   edtech_tag_product           = "${var.global_tag_product}"
   edtech_tag_sub_product       = "${var.global_tag_sub_product}"
   edtech_tag_contact           = "s.lakshminarayana@elsevier.com"
