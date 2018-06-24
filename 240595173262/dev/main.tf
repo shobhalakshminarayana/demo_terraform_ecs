@@ -195,7 +195,7 @@ module "demo_blue" {
   ]
 }
 
-module "demo_assignment" {
+/*module "demo_assignment" {
   source = "git::ssh://git@gitlab.et-scm.com/NGUYEN1/hs-terraform-edtech-assignment.git?ref=c9f66"
 
   assignment_host_based_rules = [
@@ -223,7 +223,7 @@ module "demo_assignment" {
     },
   ]
 }
-
+*/
 locals {
   demo_zone_id = "Z26XJJST2LTO8U"
 }
