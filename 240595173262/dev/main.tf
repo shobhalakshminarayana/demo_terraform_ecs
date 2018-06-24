@@ -41,7 +41,7 @@ module "demo_ecs" {
   ecs_cluster_instance_type     = "m4.large"
   ecs_cluster_asg_max_size      = 2
   ecs_cluster_asg_min_size      = 0
-  ecs_cluster_asg_desired_size  = 0
+  ecs_cluster_asg_desired_size  = 1
 }
 
 module public_lb_sg {
@@ -212,13 +212,13 @@ module "demo_assignment" {
     {
       //main routing to green
       listener_arn     = "${module.demo_alb.https_listener_arns[0]}"
-      target_group_arn = "${module.demo_alb.target_group_arns[0]}"
+      target_group_arn = "${module.demo_alb.target_group_arns[1]}"
       host_name        = "${module.demo_main_public_alias_api.route53_record_fqdn}"
     },
     {
       //main routing to blue
       listener_arn     = "${module.demo_alb.https_listener_arns[0]}"
-      target_group_arn = "${module.demo_alb.target_group_arns[1]}"
+      target_group_arn = "${module.demo_alb.target_group_arns[0]}"
       host_name        = "${module.demo_main_public_alias_api.route53_record_fqdn}"
     },
   ]
